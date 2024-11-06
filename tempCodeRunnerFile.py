@@ -1,1 +1,0 @@
-'vhigh', 'vhigh', '2', '2', 'small', 'low', 'unacc'

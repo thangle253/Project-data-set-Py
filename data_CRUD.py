@@ -1,4 +1,5 @@
 import csv
+import pandas as pd
 class DataProcessing:
     def __init__(self, file_path):
         self.file_path = file_path
@@ -26,8 +27,11 @@ class DataProcessing:
 
     def display_data(self):
         # Hiển thị dữ liệu
-        for index, record in enumerate(self.data):
-            print(f"{index}: {', '.join(record)}")
+        if self.data:
+            df = pd.DataFrame(self.data)
+            print(df)
+        else:
+            print("Không có dữ liệu để hiển thị.")
 
     def add_record(self, record):
         # Thêm bản ghi
