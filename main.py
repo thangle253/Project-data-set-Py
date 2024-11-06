@@ -3,7 +3,7 @@ from data_cleaning import clean_duplicates, fill_missing_values
 import pandas as pd
 
 def main():
-    file_path = 'cars1.csv'
+    file_path = 'cars.csv'
     dp = DataProcessing(file_path)
     
     while True:

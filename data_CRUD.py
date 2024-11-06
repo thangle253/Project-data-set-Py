@@ -4,8 +4,6 @@ class DataProcessing:
     def __init__(self, file_path):
         self.file_path = file_path
         self.data = self.load_data()  # Tải dữ liệu từ file CSV
-
-    
     def load_data(self):
         # Logic để tải dữ liệu từ file CSV
         data = []
@@ -18,20 +16,14 @@ class DataProcessing:
             print(f"File {self.file_path} không tồn tại.")
         return data
     
-
+    def display_data(self):
+        print(pd.DataFrame(self.data))
+    
     def get_sample_record(self):
         # Trả về bản ghi đầu tiên từ dữ liệu để lấy số trường
         if self.data:
             return self.data[0]
         return []
-
-    def display_data(self):
-        # Hiển thị dữ liệu
-        if self.data:
-            df = pd.DataFrame(self.data)
-            print(df)
-        else:
-            print("Không có dữ liệu để hiển thị.")
 
     def add_record(self, record):
         # Thêm bản ghi
