@@ -1,38 +1,76 @@
 import pandas as pd
 
-def clean_duplicates(data):  # Xóa các bản ghi trùng lặp
-    return data.drop_duplicates()
-def fill_missing_values(data, column, value):  # Điền giá trị vào các ô trống
-    return data.fillna({column: value})
+# Đọc dữ liệu từ tệp
+file_path = 'cars (2).csv'
+data = pd.read_csv(file_path)
 
-def main():
-    # Tải dữ liệu từ file CSV
-    file_path = 'cars.csv'
-    data = pd.read_csv(file_path)
+# Hàm 1: Đếm số lượng các giá trị duy nhất trong mỗi cột
+def count_unique_values(data):
+    print("Đếm số lượng các giá trị duy nhất trong mỗi cột:")
+    for column in data.columns:
+        unique_counts = data[column].value_counts()
+        print(f"\nSố lượng các giá trị trong cột '{column}':")
+        print(unique_counts)
 
-    print("Dữ liệu ban đầu:")
+# Sử dụng hàm đếm giá trị duy nhất
+count_unique_values(data)
+
+# Hàm 2: Loại bỏ các hàng có giá trị phổ biến nhất (giá trị trung lập) trong mỗi cột
+def remove_neutral_values(data):
+    for column in data.columns:
+        # Tìm giá trị trung lập (phổ biến nhất) trong cột
+        neutral_value = data[column].mode()[0]
+        # Loại bỏ các hàng có giá trị trung lập này trong cột
+        data = data[data[column] != neutral_value]
+        print(f"\nĐã loại bỏ giá trị trung lập '{neutral_value}' trong cột '{column}'")
+    
+    # In kết quả sau khi loại bỏ các giá trị trung lập
+    print("\nDữ liệu sau khi loại bỏ các giá trị trung lập:")
     print(data)
+    return data
 
-    # Print the columns to debug
-    print("\nCác cột trong DataFrame:")
-    print(data.columns)
+# Sử dụng hàm loại bỏ giá trị trung lập
+data = remove_neutral_values(data)
 
-    # Xóa các bản ghi trùng lặp
-    data = clean_duplicates(data)
-    print("\nDữ liệu sau khi xóa bản ghi trùng lặp:")
-    print(data)
+# Hàm 4: Đếm số lượng giá trị NULL trong mỗi cột
+def count_null_values(data):
+    print("\nĐếm số lượng giá trị NULL trong mỗi cột:")
+    for column in data.columns:
+        null_count = data[column].isnull().sum()
+        print(f"Cột '{column}': {null_count} giá trị NULL")
 
-    # Điền giá trị vào các ô trống
-    print("\nCác cột trong DataFrame:")
-    print(data.columns)
-    column = input("Nhập tên cột cần điền giá trị: ")
-    value = input("Nhập giá trị cần điền: ")
-    data = fill_missing_values(data, column, value)
-    print(f"\nDữ liệu sau khi điền giá trị '{value}' vào các ô trống của cột '{column}':")
-    print(data)
-    # Lưu dữ liệu đã xử lý vào file mới
-    data.to_csv('cleaned_cars.csv', index=False)
-    print("\nDữ liệu đã được lưu vào file 'cleaned_cars.csv'.")
+# Sử dụng hàm đếm giá trị NULL
+count_null_values(data)
+# Hàm để loại bỏ các hàng chứa giá trị NULL (NaN)
+def remove_null_values(data):
+    # Loại bỏ tất cả các hàng có chứa giá trị NULL (NaN)
+    data_cleaned = data.dropna()
+    print("Đã loại bỏ các hàng chứa giá trị NULL (NaN).")
+    
+    # Trả về DataFrame đã được loại bỏ giá trị NULL
+    return data_cleaned
 
-if __name__ == "__main__":
-    main()
+data_cleaned = remove_null_values(data)
+
+
+print(data_cleaned)
+
+# Hàm để sắp xếp dữ liệu theo cột cụ thể
+def sort_data(data, sort_columns, ascending_order=True):
+    # Sắp xếp dữ liệu theo các cột đã chỉ định
+    sorted_data = data.sort_values(by=sort_columns, ascending=ascending_order)
+    return sorted_data
+
+
+# Ví dụ sắp xếp theo cột 'buying' và 'class'
+sort_columns = ['buying', 'class']
+sorted_data = sort_data(data, sort_columns)
+
+# In kết quả sau khi sắp xếp
+print("Dữ liệu sau khi sắp xếp:")
+print(sorted_data)
+# Lưu dữ liệu đã xử lý vào tệp mới
+
+output_file_path = 'cleaned_cars3.csv'
+data.to_csv(output_file_path, index=False)
+print(f"\nDữ liệu đã được lưu vào tệp '{output_file_path}'.")
