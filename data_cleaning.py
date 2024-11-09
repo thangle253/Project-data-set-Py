@@ -1,5 +1,4 @@
 import pandas as pd
-
 # Đọc dữ liệu từ tệp
 file_path = 'cars (2).csv'
 data = pd.read_csv(file_path)
@@ -71,6 +70,6 @@ print("Dữ liệu sau khi sắp xếp:")
 print(sorted_data)
 # Lưu dữ liệu đã xử lý vào tệp mới
 
-output_file_path = 'cleaned_cars3.csv'
+output_file_path = 'cleaned_cars.csv'
 data.to_csv(output_file_path, index=False)
 print(f"\nDữ liệu đã được lưu vào tệp '{output_file_path}'.")
