@@ -1,7 +1,8 @@
 import pandas as pd
-# Đọc dữ liệu từ tệp
-file_path = 'cars (2).csv'
-data = pd.read_csv(file_path)
+file_path = 'car (2).csv'
+# Hàm để đọc dữ liệu từ tệp CSV
+def load_data(file_path):
+    return pd.read_csv(file_path)
 
 # Hàm 1: Đếm số lượng các giá trị duy nhất trong mỗi cột
 def count_unique_values(data):
@@ -10,9 +11,6 @@ def count_unique_values(data):
         unique_counts = data[column].value_counts()
         print(f"\nSố lượng các giá trị trong cột '{column}':")
         print(unique_counts)
-
-# Sử dụng hàm đếm giá trị duy nhất
-count_unique_values(data)
 
 # Hàm 2: Loại bỏ các hàng có giá trị phổ biến nhất (giá trị trung lập) trong mỗi cột
 def remove_neutral_values(data):
@@ -28,48 +26,59 @@ def remove_neutral_values(data):
     print(data)
     return data
 
-# Sử dụng hàm loại bỏ giá trị trung lập
-data = remove_neutral_values(data)
-
-# Hàm 4: Đếm số lượng giá trị NULL trong mỗi cột
+# Hàm 3: Đếm số lượng giá trị NULL trong mỗi cột
 def count_null_values(data):
     print("\nĐếm số lượng giá trị NULL trong mỗi cột:")
     for column in data.columns:
         null_count = data[column].isnull().sum()
         print(f"Cột '{column}': {null_count} giá trị NULL")
 
-# Sử dụng hàm đếm giá trị NULL
-count_null_values(data)
+
 # Hàm để loại bỏ các hàng chứa giá trị NULL (NaN)
 def remove_null_values(data):
     # Loại bỏ tất cả các hàng có chứa giá trị NULL (NaN)
     data_cleaned = data.dropna()
     print("Đã loại bỏ các hàng chứa giá trị NULL (NaN).")
-    
-    # Trả về DataFrame đã được loại bỏ giá trị NULL
     return data_cleaned
 
-data_cleaned = remove_null_values(data)
-
-
-print(data_cleaned)
-
-# Hàm để sắp xếp dữ liệu theo cột cụ thể
+# Hàm 4:để sắp xếp dữ liệu theo cột cụ thể
 def sort_data(data, sort_columns, ascending_order=True):
     # Sắp xếp dữ liệu theo các cột đã chỉ định
     sorted_data = data.sort_values(by=sort_columns, ascending=ascending_order)
     return sorted_data
 
+# Hàm main để chạy tất cả các bước
+def main():
+    file_path = 'cars (2).csv'
+    output_file_path = 'cleaned_cars.csv'
 
-# Ví dụ sắp xếp theo cột 'buying' và 'class'
-sort_columns = ['buying', 'class']
-sorted_data = sort_data(data, sort_columns)
+    # Bước 1: Đọc dữ liệu
+    data = load_data(file_path)
 
-# In kết quả sau khi sắp xếp
-print("Dữ liệu sau khi sắp xếp:")
-print(sorted_data)
-# Lưu dữ liệu đã xử lý vào tệp mới
+    # Bước 2: Đếm số lượng giá trị duy nhất
+    count_unique_values(data)
 
-output_file_path = 'cleaned_cars.csv'
-data.to_csv(output_file_path, index=False)
-print(f"\nDữ liệu đã được lưu vào tệp '{output_file_path}'.")
+    # Bước 3: Loại bỏ các hàng có giá trị trung lập
+    data = remove_neutral_values(data)
+
+    # Bước 4: Đếm giá trị NULL
+    count_null_values(data)
+
+    # Bước 5: Loại bỏ các hàng chứa giá trị NULL
+    data_cleaned = remove_null_values(data)
+
+    # Bước 6: Sắp xếp dữ liệu theo cột 'buying' và 'class'
+    sort_columns = ['buying', 'class']
+    sorted_data = sort_data(data_cleaned, sort_columns)
+
+    # In kết quả sau khi sắp xếp
+    print("Dữ liệu sau khi sắp xếp:")
+    print(sorted_data)
+
+    # Lưu dữ liệu đã xử lý vào tệp mới
+    sorted_data.to_csv(output_file_path, index=False)
+    print(f"\nDữ liệu đã được lưu vào tệp '{output_file_path}'.")
+
+# Chạy hàm main
+if __name__ == "__main__":
+    main()
