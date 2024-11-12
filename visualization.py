@@ -1,7 +1,7 @@
 import pandas as pd  
 import numpy as np
 import seaborn as sns
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt # type: ignore
 
 df = pd.read_csv('cars.csv')
 #biểu đồ phân phối của các biến phân loại
