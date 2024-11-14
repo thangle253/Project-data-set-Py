@@ -20,7 +20,11 @@ for column in df.select_dtypes(include=['object']).columns:
 class_mapping = dict(enumerate(df['class'].astype('category').cat.categories))
 encoded_df['class'] = encoded_df['class'].map(class_mapping)
 plt.figure(figsize=(4, 3))
-sns.pairplot(encoded_df, hue='class', palette="Pastel1")
+pairplot = sns.pairplot(encoded_df, hue='class', palette="Set1")
+# Thiết lập giá trị cho các trục x và y của mỗi biểu đồ con
+for ax in pairplot.axes.flatten():
+    ax.set_xticks([0, 1, 2, 3])  # Các giá trị trục x
+    ax.set_yticks([0, 1, 2, 3])  # Các giá trị trục y
 plt.show()
 
 # Phân tích sự cân bằng các lớp xe 
