@@ -1,32 +1,44 @@
 import pandas as pd
 file_path = 'car (2).csv'
-# Hàm để đọc dữ liệu từ tệp CSV
 def load_data(file_path):
     return pd.read_csv(file_path)
 
-# Hàm 1: Đếm số lượng các giá trị duy nhất trong mỗi cột
-def count_unique_values(data):
-    print("Đếm số lượng các giá trị duy nhất trong mỗi cột:")
-    for column in data.columns:
-        unique_counts = data[column].value_counts()
-        print(f"\nSố lượng các giá trị trong cột '{column}':")
-        print(unique_counts)
+# Hàm đếm các giá trị trùng lặp theo hàng
+def count_duplicate_values(data):
+    print("Đếm số lượng các giá trị trùng lặp theo từng hàng:")
+    for index, row in data.iterrows():
+        # Đếm số lần xuất hiện của mỗi giá trị trong hàng
+        value_counts = row.value_counts()
+        # Lọc ra các giá trị trùng lặp (xuất hiện nhiều hơn một lần)
+        duplicates = value_counts[value_counts > 1]
+        
+        # In kết quả cho hàng hiện tại
+        if not duplicates.empty:
+            print(f"\nCác giá trị trùng lặp trong hàng {index}:")
+            print(duplicates)
+        else:
+            print(f"\nKhông có giá trị trùng lặp trong hàng {index}")
 
-# Hàm 2: Loại bỏ các hàng có giá trị phổ biến nhất (giá trị trung lập) trong mỗi cột
-def remove_neutral_values(data):
-    for column in data.columns:
-        # Tìm giá trị trung lập (phổ biến nhất) trong cột
-        neutral_value = data[column].mode()[0]
-        # Loại bỏ các hàng có giá trị trung lập này trong cột
-        data = data[data[column] != neutral_value]
-        print(f"\nĐã loại bỏ giá trị trung lập '{neutral_value}' trong cột '{column}'")
+# Hàm loại bỏ các giá trị trùng lặp theo hàng
+def remove_duplicate_values(data):
+    modified_data = data.copy()  # Tạo bản sao để tránh thay đổi trực tiếp DataFrame gốc
     
-    # In kết quả sau khi loại bỏ các giá trị trung lập
-    print("\nDữ liệu sau khi loại bỏ các giá trị trung lập:")
-    print(data)
-    return data
+    for index, row in modified_data.iterrows():
+        # Đếm số lần xuất hiện của mỗi giá trị trong hàng
+        value_counts = row.value_counts()
+        # Tìm các giá trị trùng lặp (xuất hiện nhiều hơn một lần)
+        duplicate_values = value_counts[value_counts > 1].index
+        # Thay thế các giá trị trùng lặp bằng NaN
+        modified_data.loc[index] = row.apply(lambda x: x if x not in duplicate_values else pd.NA)
+        print(f"\nĐã loại bỏ các giá trị trùng lặp trong hàng {index}")
+    
+    # In kết quả sau khi loại bỏ các giá trị trùng lặp
+    print("\nDữ liệu sau khi loại bỏ các giá trị trùng lặp theo từng hàng:")
+    print(modified_data)
+    return modified_data
 
-# Hàm 3: Đếm số lượng giá trị NULL trong mỗi cột
+
+# Hàm  Đếm số lượng giá trị NULL trong mỗi cột
 def count_null_values(data):
     print("\nĐếm số lượng giá trị NULL trong mỗi cột:")
     for column in data.columns:
@@ -41,7 +53,7 @@ def remove_null_values(data):
     print("Đã loại bỏ các hàng chứa giá trị NULL (NaN).")
     return data_cleaned
 
-# Hàm 4:để sắp xếp dữ liệu theo cột cụ thể
+# Hàm để sắp xếp dữ liệu theo cột cụ thể
 def sort_data(data, sort_columns, ascending_order=True):
     # Sắp xếp dữ liệu theo các cột đã chỉ định
     sorted_data = data.sort_values(by=sort_columns, ascending=ascending_order)
@@ -52,30 +64,29 @@ def main():
     file_path = 'cars (2).csv'
     output_file_path = 'cleaned_cars.csv'
 
-    # Bước 1: Đọc dữ liệu
+   
     data = load_data(file_path)
 
-    # Bước 2: Đếm số lượng giá trị duy nhất
-    count_unique_values(data)
+    #Đếm số lượng giá trị trùng lập
+    count_duplicate_values(data)
 
-    # Bước 3: Loại bỏ các hàng có giá trị trung lập
-    data = remove_neutral_values(data)
+    #Loại bỏ giá trị trung lập
+    data = remove_duplicate_values(data)
 
-    # Bước 4: Đếm giá trị NULL
+    #Đếm giá trị NULL
     count_null_values(data)
 
-    # Bước 5: Loại bỏ các hàng chứa giá trị NULL
+    #Loại bỏ các hàng chứa giá trị NULL
     data_cleaned = remove_null_values(data)
 
-    # Bước 6: Sắp xếp dữ liệu theo cột 'buying' và 'class'
+    #Sắp xếp dữ liệu theo cột 'buying' và 'class'
     sort_columns = ['buying', 'class']
     sorted_data = sort_data(data_cleaned, sort_columns)
 
-    # In kết quả sau khi sắp xếp
     print("Dữ liệu sau khi sắp xếp:")
     print(sorted_data)
 
-    # Lưu dữ liệu đã xử lý vào tệp mới
+    #Lưu dữ liệu đã xử lý vào tệp mới
     sorted_data.to_csv(output_file_path, index=False)
     print(f"\nDữ liệu đã được lưu vào tệp '{output_file_path}'.")
 
