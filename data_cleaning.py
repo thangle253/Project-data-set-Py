@@ -46,12 +46,6 @@ def remove_null_values(data):
     print("Đã loại bỏ các hàng chứa giá trị NULL (NaN).")
     return data_cleaned
 
-# Hàm sắp xếp dữ liệu theo cột cụ thể
-def sort_data(data, sort_columns, ascending_order=True):
-    # Sắp xếp dữ liệu theo các cột đã chỉ định
-    sorted_data = data.sort_values(by=sort_columns, ascending=ascending_order)
-    return sorted_data
-
 # Hàm main để chạy tất cả các bước
 def main():
     file_path = 'cars (2).csv'  # Đảm bảo tên tệp chính xác
@@ -72,16 +66,8 @@ def main():
     # Loại bỏ các hàng chứa giá trị NULL
     data_cleaned = remove_null_values(modified_data)
 
-    # Sắp xếp dữ liệu theo cột 'buying' và 'class'
-    sort_columns = ['buying', 'class']
-    sorted_data = sort_data(data_cleaned, sort_columns)
-
-    # In dữ liệu đã sắp xếp
-    print("Dữ liệu sau khi sắp xếp theo cột 'buying' và 'class':")
-    print(sorted_data)
-
     # Lưu dữ liệu đã xử lý vào tệp mới
-    sorted_data.to_csv(output_file_path, index=False)
+    data_cleaned.to_csv(output_file_path, index=False)
     print(f"\nDữ liệu đã được lưu vào tệp '{output_file_path}'.")
 
 # Chạy hàm main
