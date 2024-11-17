@@ -1,5 +1,5 @@
 from data_CRUD import DataProcessing
-from data_cleaning import clean_duplicates, fill_missing_values
+# from data_cleaning import clean_duplicates, fill_missing_values
 import pandas as pd
 
 def main():
