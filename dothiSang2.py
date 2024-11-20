@@ -7,7 +7,7 @@ data = pd.read_csv('cars.csv')
 scatter_colors = {'unacc': 'red', 'acc': 'blue', 'good': 'green', 'vgood': 'purple'}
 
 # Tạo biểu đồ scatter plot
-plt.figure(figsize=(8, 6))
+plt.figure(figsize=(12, 8))
 for category, color in scatter_colors.items():
     subset = data[data['class'] == category]
     plt.scatter(subset['buying'], subset['maint'], label=category, alpha=0.6, color=color)

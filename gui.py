@@ -8,34 +8,80 @@ class CarDataGUI:
     def __init__(self, root):
         self.root = root
         self.root.title("Giao diện quản lý dữ liệu car.csv")
+        self.root.geometry("570x800")
+        #background
+        self.root.background = ImageTk.PhotoImage(Image.open("background.jpg").resize((570, 800)))
         self.data_processor = DataProcessing('cars.csv')  # Khởi tạo với file dữ liệu
-        self.data = self.data_processor.data  # Dữ liệu ban đầu
         self.current_page = 0  # Trang hiện tại
         # Khung chứa nút chức năng
         self.button_frame = ttk.Frame(root)
-        self.button_frame.pack(pady=20) #mục đích: tạo khoảng cách giữa các nút
             
         # Tải hình ảnh cho các nút chức năng
-        self.clean_icon = ImageTk.PhotoImage(Image.open("clean.png"))
-        self.add_record_icon = ImageTk.PhotoImage(Image.open("add.png"))
-        self.delete_record_icon = ImageTk.PhotoImage(Image.open("delete.png"))
-        self.show_table_icon = ImageTk.PhotoImage(Image.open("show.png"))
-        self.describe_icon = ImageTk.PhotoImage(Image.open("describe.png"))
-        self.visualize_icon = ImageTk.PhotoImage(Image.open("visual.png"))
-        self.sort_icon = ImageTk.PhotoImage(Image.open("sort.png"))
-        self.search_icon = ImageTk.PhotoImage(Image.open("search.png"))
-        self.filter_icon = ImageTk.PhotoImage(Image.open("filter.png"))
+        self.clean_icon = ImageTk.PhotoImage(Image.open("clean.png").resize((170, 50)))
+        self.add_record_icon = ImageTk.PhotoImage(Image.open("add.png").resize((170, 50)))
+        self.delete_record_icon = ImageTk.PhotoImage(Image.open("delete.png").resize((170, 50)))
+        self.show_table_icon = ImageTk.PhotoImage(Image.open("show.png").resize((170, 50)))
+        self.describe_icon = ImageTk.PhotoImage(Image.open("describe.png").resize((170, 50)))
+        self.visualize_icon = ImageTk.PhotoImage(Image.open("visual.png").resize((170, 50)))
+        self.sort_icon = ImageTk.PhotoImage(Image.open("sort.png").resize((170, 50)))
+        self.search_icon = ImageTk.PhotoImage(Image.open("search.png").resize((170, 50)))
+        self.filter_icon = ImageTk.PhotoImage(Image.open("filter.png").resize((170, 50)))
 
+        #bg
+        self.bg_label = tk.Label(self.root, image=self.root.background)
+        self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+        
+
+        self.button_frame = ttk.Frame(self.root)
+        self.button_frame.place(x=50, y=310)
+        tk.Button(self.button_frame, image=self.show_table_icon, command=self.show_table).grid()
+
+        self.button_frame = ttk.Frame(self.root)
+        self.button_frame.place(x=240, y=350) 
+        tk.Button(self.button_frame, image=self.delete_record_icon, command=self.delete_record).grid()
+
+        self.button_frame = ttk.Frame(self.root)
+        self.button_frame.place(x=50,y=390)
+        tk.Button(self.button_frame, image=self.clean_icon, command=self.clean).grid()
+
+        self.button_frame = ttk.Frame(self.root)
+        self.button_frame.place(x=240, y=430) 
+        tk.Button(self.button_frame, image=self.describe_icon, command=self.describe).grid()
+
+        self.button_frame = ttk.Frame(self.root)
+        self.button_frame.place(x=50, y=470)
+        tk.Button(self.button_frame, image=self.add_record_icon, command=self.add_record).grid(row=4, column=0)
+
+                                 
+        self.button_frame = ttk.Frame(self.root)
+        self.button_frame.place(x=240, y=510) 
+        tk.Button(self.button_frame, image=self.visualize_icon, command=self.clean).grid(row=5, column=0)
+
+
+        self.button_frame = ttk.Frame(self.root)
+        self.button_frame.place(x=50, y=550)
+        tk.Button(self.button_frame, image=self.sort_icon, command=self.clean).grid(row=6, column=0)
+
+
+        self.button_frame = ttk.Frame(self.root)
+        self.button_frame.place(x=240, y=590) 
+        tk.Button(self.button_frame, image=self.search_icon, command=self.clean).grid(row=7, column=0)
+
+
+        self.button_frame = ttk.Frame(self.root)
+        self.button_frame.place(x=50, y= 630)
+        tk.Button(self.button_frame, image=self.filter_icon, command=self.clean).grid(row=8, column=0)
+
+
+       
+
+
+       
+
+         
+         
 
         # Các nút chức năng
-        tk.Button(self.button_frame, image=self.show_table_icon, command=self.show_table).grid(row=0, column=0)
-        tk.Button(self.button_frame, image=self.delete_record_icon, command=self.delete_record).grid(row=1, column=0)
-        tk.Button(self.button_frame, image = self.clean_icon , command=self.clean).grid(row=2, column=0)
-        tk.Button(self.button_frame, image=self.describe_icon, command=self.describe).grid(row=3, column=0)
-        tk.Button(self.button_frame, image=self.visualize_icon, command=self.clean).grid(row=0, column=1)
-        tk.Button(self.button_frame, image=self.sort_icon, command=self.clean).grid(row=1, column=1)
-        tk.Button(self.button_frame, image=self.search_icon, command=self.clean).grid(row=2, column=1)
-        tk.Button(self.button_frame, image=self.filter_icon, command=self.clean).grid(row=3, column=1)
     
 
     def display_data(self):
@@ -174,7 +220,7 @@ class CarDataGUI:
         new_window.geometry("800x400")
         description = self.data_processor.describe_data() # Lấy dữ liệu mô tả từ `data_processor`
         self.display_description_as_table(new_window, description) # Hiển thị DataFrame trong Treeview
-        ttk.Button(new_window, text="Đóng", command=new_window.destroy).pack(pady=10) # Nút đóng cửa sổ
+        tk.Button(new_window, text="Đóng", command=new_window.destroy).pack(pady=10) # Nút đóng cửa sổ
     def display_description_as_table(self, window, description):
         """Hiển thị DataFrame dưới dạng bảng trong Treeview."""
         # Tạo Treeview với các cột từ DataFrame
@@ -182,7 +228,7 @@ class CarDataGUI:
         for col in description.columns:
             tree.heading(col, text=col)
             tree.column(col, anchor='center', width=150)  # Đặt độ rộng cột
-        tree.pack(fill=tk.BOTH, expand=True)
+        tree.pack(fill=tk.BOTH, expand=True) 
         # Thêm dữ liệu từ DataFrame vào Treeview
         for _, row in description.iterrows():
             tree.insert('', 'end', values=row.tolist())
@@ -191,11 +237,7 @@ class CarDataGUI:
    
 
     
-   
 
-
-
-        
 
 if __name__ == "__main__":
     root = tk.Tk()
