@@ -48,8 +48,8 @@ def remove_null_values(data):
 
 # Hàm main để chạy tất cả các bước
 def main():
-    file_path = 'cars (2).csv'  # Đảm bảo tên tệp chính xác
-    output_file_path = 'cleaned_cars.csv'
+    file_path = 'cars.csv'  # Đảm bảo tên tệp chính xác
+    output_file_path = 'cars.csv'
 
     # Tải dữ liệu từ tệp
     data = load_data(file_path)
