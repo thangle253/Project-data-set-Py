@@ -1,6 +1,6 @@
 import pandas as pd
 
-file_path = 'cars (2).csv'
+file_path = 'cars.csv'
 
 # Hàm tải dữ liệu từ tệp CSV
 def load_data(file_path):
@@ -8,7 +8,6 @@ def load_data(file_path):
 
 # Hàm đếm số lượng hàng trùng lặp
 def count_duplicate_rows(data):
-    # Đếm tổng số hàng trùng lặp (giữ lại tất cả bản sao để đếm)
     duplicate_count = data.duplicated(keep=False).sum()
     print(f"\nSố lượng các hàng trùng lặp: {duplicate_count}")
 
@@ -30,28 +29,26 @@ def remove_duplicate_rows(data):
 # Hàm đếm số lượng giá trị NULL trong mỗi cột
 def count_null_values(data):
     print("\nĐếm số lượng giá trị NULL trong mỗi cột:")
-    for column in data.columns:  # Duyệt qua các cột trong DataFrame
-        null_count = data[column].isnull().sum()  # Đếm số lượng giá trị NULL trong cột
+    for column in data.columns:  
+        null_count = data[column].isnull().sum() 
         print(f"Cột '{column}': {null_count} giá trị NULL")
 
     # Chỉ ra các hàng có giá trị NULL
     print("\nDanh sách các hàng có giá trị NULL:")
-    null_rows = data[data.isnull().any(axis=1)]  # Lọc ra các hàng có giá trị NULL
+    null_rows = data[data.isnull().any(axis=1)] 
     print(null_rows)
 
 # Hàm loại bỏ các hàng chứa giá trị NULL (NaN)
 def remove_null_values(data):
-    # Loại bỏ tất cả các hàng có chứa giá trị NULL (NaN)
     data_cleaned = data.dropna()
     print("Đã loại bỏ các hàng chứa giá trị NULL (NaN).")
     return data_cleaned
 
-# Hàm main để chạy tất cả các bước
-def main():
-    file_path = 'cars.csv'  # Đảm bảo tên tệp chính xác
-    output_file_path = 'cars.csv'
 
-    # Tải dữ liệu từ tệp
+def main():
+    file_path = 'cars.csv'
+    output_file_path = 'data_cleaning.csv'
+
     data = load_data(file_path)
 
     # Đếm số lượng giá trị trùng lặp
