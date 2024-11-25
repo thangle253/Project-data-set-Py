@@ -7,6 +7,7 @@ from data_cleaning import clean_data
 from loc_timkiem import filter_data, get_unique_values, search_data
 from sap_xep_du_lieu import sort_data
 from visual_data import BieuDo1, BieuDo2, BieuDo3, BieuDo4, BieuDo5, BieuDo6
+
 class CarDataGUI:
     def __init__(self, root):
         self.root = root
@@ -61,21 +62,18 @@ class CarDataGUI:
         self.button_frame.place(x=240, y=510) 
         tk.Button(self.button_frame, image=self.visualize_icon, command=self.visualize).grid(row=5, column=0)
 
-
         self.button_frame = tk.Frame(self.root)
         self.button_frame.place(x=50, y=550)
         tk.Button(self.button_frame, image=self.sort_icon, command=self.sort).grid(row=6, column=0)
-
 
         self.button_frame = tk.Frame(self.root)
         self.button_frame.place(x=240, y=590) 
         tk.Button(self.button_frame, image=self.search_icon, command=self.search).grid(row=7, column=0)
 
-
         self.button_frame = tk.Frame(self.root)
         self.button_frame.place(x=50, y= 630)
         tk.Button(self.button_frame, image=self.filter_icon, command=self.filter).grid(row=8, column=0)
-
+        
         self.button_frame = tk.Frame(self.root)
         self.button_frame.place(x=240, y= 670)
         tk.Button(self.button_frame, image=self.update_icon, command=self.update).grid(row=8, column=0)

@@ -60,7 +60,7 @@ def clean_data(file_path):
     data = load_data(file_path)
 
     # Đếm và xử lý trùng lặp
-    duplicate_count, _ = count_duplicate_rows(data)
+    duplicate_count, _ = count_duplicate_rows(data) 
     if duplicate_count > 0:
         data = remove_duplicate_rows(data)
 
