@@ -51,22 +51,22 @@ def BieuDo4():
     plt.legend(title='Car Class', loc='upper left', bbox_to_anchor=(1, 1))
     plt.grid(True)
     plt.show()
+
 def BieuDo5():
     """Biểu đồ thể hiện về mối quan hệ giữa các đặc điểm khác nhau của xe và cách chúng phân bố theo các lớp xe"""
     encoded_df = df.copy()
     for column in df.select_dtypes(include=['object']).columns:
         encoded_df[column] = encoded_df[column].astype('category').cat.codes
-
     # Các mối quan hệ từng cặp (sử dụng dữ liệu đã được mã hóa nhãn)
     class_mapping = dict(enumerate(df['class'].astype('category').cat.categories))
     encoded_df['class'] = encoded_df['class'].map(class_mapping)
-    plt.figure(figsize=(12, 8))
     pairplot = sns.pairplot(encoded_df, hue='class', palette="Set1")
     # Thiết lập giá trị cho các trục x và y của mỗi biểu đồ con
     for ax in pairplot.axes.flatten():
         ax.set_xticks([0, 1, 2, 3])  # Các giá trị trục x
         ax.set_yticks([0, 1, 2, 3])  # Các giá trị trục y
     plt.show()
+
 def BieuDo6():
     """ Biểu đồ thống kê số lượng xe dựa trên mức đánh giá"""
     # Mã hóa các biến phân loại thành các giá trị số
@@ -76,9 +76,16 @@ def BieuDo6():
     # Tính toán số lượng xe theo loại xe
     class_counts = df['class'].value_counts()
     # Vẽ biểu đồ thanh
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(12, 6))
     sns.barplot(x=class_counts.index, y=class_counts.values, palette='Set2')
     plt.title('Number of Cars by Class')
     plt.xlabel('Car Class')
     plt.ylabel('Number of Cars')
     plt.show()
+
+
+
+def main():
+    BieuDo5()
+if __name__ == "__main__":
+    main()

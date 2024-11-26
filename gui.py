@@ -386,7 +386,7 @@ class CarDataGUI:
             "Phân tích mối quan hệ giữa giá mua và mức độ an toàn của xe": BieuDo3,
             "Sự phân bố các lớp xe dựa trên giá mua và chi phí bảo dưỡng": BieuDo4,
             "Mối quan hệ giữa các đặc điểm khác nhau của xe và cách chúng phân bố theo các lớp xe": BieuDo5,
-            "thống kê số lượng xe dựa trên mức đánh giá": BieuDo6
+            "Thống kê số lượng xe dựa trên mức đánh giá": BieuDo6
         }
         # Combobox chọn loại biểu đồ
         tk.Label(visualize_window, text="Chọn loại biểu đồ:").pack(pady=5)
