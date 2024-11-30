@@ -53,13 +53,16 @@ def BieuDo4():
     plt.show()
 
 def BieuDo5():
-    """Biểu đồ thể hiện về mối quan hệ giữa các đặc điểm khác nhau của xe và cách chúng phân bố theo các lớp xe"""
+    # Mã hóa các biến phân loại thành các giá trị số
+    # Sử dụng pandas để mã hóa cột phân loại
     encoded_df = df.copy()
     for column in df.select_dtypes(include=['object']).columns:
         encoded_df[column] = encoded_df[column].astype('category').cat.codes
+
     # Các mối quan hệ từng cặp (sử dụng dữ liệu đã được mã hóa nhãn)
     class_mapping = dict(enumerate(df['class'].astype('category').cat.categories))
     encoded_df['class'] = encoded_df['class'].map(class_mapping)
+    plt.figure(figsize=(12, 8))
     pairplot = sns.pairplot(encoded_df, hue='class', palette="Set1")
     # Thiết lập giá trị cho các trục x và y của mỗi biểu đồ con
     for ax in pairplot.axes.flatten():
