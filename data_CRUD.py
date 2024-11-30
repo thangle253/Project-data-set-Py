@@ -110,7 +110,7 @@ class DataProcessing:
     def delete_record(self, index):
         # Xóa bản ghi
         if 0 <= index < len(self.data):
-            self.data = self.data.drop(index).reset_index(drop=True)
+            self.data = self.data.drop(index).reset_index(drop=True) 
             print("Bản ghi đã được xóa.")
         else:
             print("Vị trí không hợp lệ.")

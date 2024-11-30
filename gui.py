@@ -188,7 +188,7 @@ class CarDataGUI:
         delete_window.title("Xóa bản ghi")
         delete_window.geometry("300x100")
 
-        ttk.Label(delete_window, text="Nhập ID cần xóa:").grid(row=0, column=0, padx=5, pady=5)
+        tk.Label(delete_window, text="Nhập ID cần xóa:").grid(row=0, column=0, padx=5, pady=5)
         id_entry = ttk.Entry(delete_window)
         id_entry.grid(row=0, column=1, padx=5, pady=5)
 
@@ -197,7 +197,7 @@ class CarDataGUI:
             if not record_id:
                 messagebox.showwarning("Cảnh báo", "Vui lòng nhập ID!")
                 return
-            self.data_processor.delete_record(int(record_id))
+            self.data_processor.delete_record(int(record_id)-2)
             self.data_processor.save_data()
             self.data = self.data_processor.data 
             messagebox.showinfo("Thông báo", f"Bản ghi với ID {record_id} đã được xóa!")
@@ -295,7 +295,7 @@ class CarDataGUI:
         def apply_update():
             try:
                 # Lấy ID từ Entry
-                record_id = int(id_entry.get().strip())
+                record_id = int(id_entry.get().strip()) - 2
                 # Kiểm tra ID có tồn tại không
                 if record_id < 0 or record_id >= len(self.data_processor.data):
                     messagebox.showerror("Lỗi", f"ID {record_id} không tồn tại.")
@@ -363,9 +363,8 @@ class CarDataGUI:
             if not search_id.isdigit():
                 messagebox.showerror("Lỗi", "ID phải là số nguyên!")
                 return
-            search_id = int(search_id)
+            search_id = int(search_id) -2
             result = search_data(self.data_processor.data, 'index', search_id) 
-            print(result)
             if isinstance(result, pd.DataFrame) and not result.empty: 
                 # Định dạng chi tiết bản ghi trực tiếp từ hàng duy nhất
                 record_details = "\n".join([f"{col}: {val}" for col, val in result.iloc[0].items()])  
