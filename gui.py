@@ -6,7 +6,7 @@ from data_CRUD import DataProcessing  # Import từ module data_CRUD
 from data_cleaning import clean_data
 from loc_timkiem import filter_data, get_unique_values, search_data
 from sap_xep_du_lieu import sort_data
-from visual_data import BieuDo1, BieuDo2, BieuDo3, BieuDo4, BieuDo5, BieuDo6
+from visual_data import BieuDo1, BieuDo2,BieuDo3, BieuDo4, BieuDo5, BieuDo6
 
 class CarDataGUI:
     def __init__(self, root):
@@ -204,7 +204,8 @@ class CarDataGUI:
             delete_window.destroy() # Đóng cửa sổ popup
 
         ttk.Button(delete_window, text="Xóa", command=delete_data).grid(row=1, column=0, columnspan=2, pady=10)
-    
+ 
+
     def clean(self):
         """Làm sạch dữ liệu: Loại bỏ các hàng trùng lặp và các giá trị NULL."""
         try:
@@ -268,8 +269,6 @@ class CarDataGUI:
             # Reset về dữ liệu gốc sau khi thực hiện lọc
             self.data_processor.data = pd.read_csv('cars.csv') 
             filter_window.destroy() # Đóng cửa sổ popup
-
-
             
         # Nút áp dụng lọc
         tk.Button(filter_window, text="Lọc", command=apply_filter).grid(row=len(columns), column=0, columnspan=2, pady=20)
@@ -374,11 +373,13 @@ class CarDataGUI:
             search_window.destroy()
         tk.Button(search_window, text="Tìm kiếm", command=perform_search).pack()
 
+    
+
     def visualize(self):
+        
         """Hiển thị popup để người dùng chọn loại biểu đồ trực quan."""
         visualize_window = tk.Toplevel(self.root)
         visualize_window.title("Trực quan hóa dữ liệu")
-        # Loại biểu đồ được định nghĩa trước
         chart_types = {
             "Phân tích sự phân phối các biến trong đánh giá ô tô": BieuDo1,
             "Phân tích ảnh hưởng của các thuộc tính xe hơi đến đánh giá chất lượng": BieuDo2,

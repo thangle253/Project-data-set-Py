@@ -34,7 +34,7 @@ def BieuDo3():
     print(interaction_crosstab)
     # Tạo biểu đồ nhiệt
     plt.figure(figsize=(12, 8))
-    sns.heatmap(interaction_crosstab, annot=True, cmap='Blues', fmt='.3f', yticklabels=buying_order[::-1])
+    sns.heatmap(interaction_crosstab, annot=True, cmap='Blues', fmt='.4f', yticklabels=buying_order[::-1])
     # Thiết lập tiêu đề cho biểu đồ
     plt.title('Buying vs Safety Crosstab Heatmap')
     plt.show()
