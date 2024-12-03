@@ -9,12 +9,13 @@ df.head()
 df.describe()
 df.isnull().sum()
 df.info()
-
-
+# Mã hóa
+encoded_df = df.copy()
+encoded_df['class'] = encoded_df['class'].astype('category').cat.codes
 
 # Phân tích sự cân bằng các lớp xe 
 plt.figure(figsize=(8, 6))
-class_counts = df['class'].value_counts()
+class_counts = encoded_df['class'].value_counts()
 sns.barplot(x=class_counts.index, y=class_counts.values, palette='Set2')
 plt.title('Phân tích sự cân bằng các lớp xe')
 plt.ylabel('Số lượng')
