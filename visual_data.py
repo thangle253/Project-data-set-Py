@@ -26,15 +26,18 @@ def BieuDo3():
     """Biểu đồ nhiệt phân tích mối quan hệ giữa giá mua và mức độ an toàn của xe"""
     buying_order = ['low', 'med', 'high', 'vhigh']
     safety_order = ['low', 'med', 'high']
+
     # Chuyển đổi các cột 'buying' và 'safety' thành kiểu Categorical với thứ tự đã định nghĩa
     df['buying'] = pd.Categorical(df['buying'], categories=buying_order, ordered=True)
     df['safety'] = pd.Categorical(df['safety'], categories=safety_order, ordered=True)
+
     # Tạo bảng crosstab giữa chi phí mua và độ an toàn, chuẩn hóa theo hàng
     interaction_crosstab = pd.crosstab(df['buying'], df['safety'], normalize='index')
     print(interaction_crosstab)
     # Tạo biểu đồ nhiệt
     plt.figure(figsize=(12, 8))
-    sns.heatmap(interaction_crosstab, annot=True, cmap='Blues', fmt='.4f', yticklabels=buying_order[::-1])
+    sns.heatmap(interaction_crosstab, annot=True, cmap='Blues', fmt='.3f', yticklabels=buying_order[::-1])
+
     # Thiết lập tiêu đề cho biểu đồ
     plt.title('Buying vs Safety Crosstab Heatmap')
     plt.show()
