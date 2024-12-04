@@ -341,6 +341,8 @@ class CarDataGUI:
                 # Thực hiện sắp xếp
                 self.data_processor.data = sort_data(self.data_processor.data, sort_column, ascending_order)
                 self.show_table() # Hiển thị dữ liệu đã sắp xếp
+                self.data_processor.save_data()
+
                 # Thông báo thành công
                 messagebox.showinfo("Thành công", f"Dữ liệu đã được sắp xếp theo cột '{sort_column}' ({'Tăng dần' if ascending_order else 'Giảm dần'}).")
                 sort_window.destroy()
